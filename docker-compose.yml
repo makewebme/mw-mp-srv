@@ -1,0 +1,40 @@
+version: '3.5'
+
+services:
+  mw_marketplace_postgres:
+    container_name: mw_marketplace_postgres
+    image: postgres:14
+    environment:
+      POSTGRES_USER: mw_marketplace
+      POSTGRES_PASSWORD: mw_marketplace
+      PGDATA: /data/postgres
+    volumes:
+       - postgres:/var/www/mw_marketplace/docker-volumes/postgres
+    ports:
+      - 127.0.0.1:5432:5432
+    networks:
+      - mw_marketplace
+    restart: unless-stopped
+
+  mw_marketplace_pgadmin:
+    container_name: mw_marketplace_pgadmin
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: mw_marketplace@admin.com
+      PGADMIN_DEFAULT_PASSWORD: mw_marketplace
+      PGADMIN_CONFIG_SERVER_MODE: 'False'
+    volumes:
+       - pgadmin:/var/www/mw_marketplace/docker-volumes/pgadmin
+    ports:
+      - 127.0.0.1:5050:80
+    networks:
+      - mw_marketplace
+    restart: unless-stopped
+
+networks:
+  mw_marketplace:
+    driver: bridge
+
+volumes:
+  postgres:
+  pgadmin:
