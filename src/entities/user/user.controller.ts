@@ -4,6 +4,7 @@ import { Response, Request } from 'express'
 import { UserService } from './user.service'
 import { UpdateUserDto } from './dto/updateUser.dto'
 
+
 @Controller({ path: 'users' })
 export class UserController {
   constructor(
@@ -14,7 +15,7 @@ export class UserController {
   @HttpCode(200)
   async getAllUsers(
     @Res({ passthrough: true }) res: Response,
-    @HostParam('account') account: string 
+    @HostParam('account') account: string
   ) {
     const users = await this.userService.getAllUsers()
 

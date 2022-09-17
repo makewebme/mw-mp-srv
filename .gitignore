@@ -14,22 +14,14 @@ lerna-debug.log*
 # OS
 .DS_Store
 
-# Tests
-/coverage
-/.nyc_output
+# Generated files
+storage/*
+!storage/images/
+!storage/.gitkeep
 
-# IDEs and editors
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
+storage/images/*
+!storage/images/products/
+!storage/images/.gitkeep
 
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+storage/images/products/*
+!storage/images/products/.gitkeep
