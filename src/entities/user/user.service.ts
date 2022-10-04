@@ -5,6 +5,7 @@ import { genSalt, hash } from 'bcrypt'
 
 import { User } from './user.entity'
 import { UpdateUserDto } from './dto/updateUser.dto'
+import { RegisterUserDto } from './dto/registerUser.dto'
 
 
 @Injectable()
@@ -14,11 +15,13 @@ export class UserService {
   ) {}
 
   availableFields = [
+    'login',
+    'email',
+    'phone',
     'nameFirst',
     'nameLast',
-    'email',
-    'gender',
     'birthDate',
+    'gender',
   ]
 
   // Filter body's fileds from available fields list
@@ -34,7 +37,7 @@ export class UserService {
     return filteredBody
   }
 
-  public async createUser(userData: any) {
+  public async createUser(userData: RegisterUserDto) {
     const salt = await genSalt(10)
 
     const hashedPassword = await hash(userData.password, salt)
@@ -53,10 +56,19 @@ export class UserService {
     })
   }
 
-  public async getUserData(id: number) {
+  public async getUserById(id: number) {
     return await this.userRepository.findOne({
       where: { id },
       select: this.availableFields as any
+    })
+  }
+
+  public async getUserByLoginOrEmail(loginOrEmail: string) {
+    return await this.userRepository.findOne({
+      where: [
+        { login: loginOrEmail },
+        { email: loginOrEmail },
+      ]
     })
   }
 

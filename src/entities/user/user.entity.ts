@@ -8,8 +8,14 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number
 
+  @Column({ name: 'login', type: 'varchar' })
+  login: string
+
   @Column({ name: 'email', type: 'varchar' })
   email: string
+
+  @Column({ name: 'phone', type: 'varchar' })
+  phone: string
 
   @Column({ name: 'password', type: 'varchar' })
   password: string
