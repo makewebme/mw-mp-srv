@@ -1,5 +1,5 @@
 import {
-  Controller, Get, Post, Put, Delete,
+  Controller, Get, Post, Put, Delete, UseGuards,
   Param, ParseIntPipe, Body, HttpCode, HttpStatus,
 } from '@nestjs/common'
 import { compare } from 'bcrypt'
@@ -44,15 +44,11 @@ export class UserController {
     const isPasswordMatch = await compare(password, foundUser.password)
     if (!isPasswordMatch) throw new ForbiddenException()
 
-    const jwt = await this.jwtService.setSession({
-      userId: foundUser.id,
-    })
+    const jwt = await this.jwtService.setSession({ userId: foundUser.id })
 
     return {
       status: 'ok',
-      data: {
-        accessToken: jwt,
-      },
+      data: { accessToken: jwt },
     }
   }
 

@@ -1,8 +1,10 @@
 import { Module } from '@nestjs/common'
 import { JwtModule as NestJwtModule } from '@nestjs/jwt'
+import { PassportModule } from '@nestjs/passport'
 
-import { JwtService } from './jwt.service'
 import { RedisModule } from '@services/redis/redis.module'
+import { JwtService } from './jwt.service'
+import { JwtStrategy } from './jwt.strategy'
 
 
 @Module({
@@ -13,9 +15,10 @@ import { RedisModule } from '@services/redis/redis.module'
         expiresIn: Number(process.env.JWT_EXPIRE) * 1000
       },
     }),
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     RedisModule,
   ],
-  providers: [ JwtService ],
+  providers: [ JwtService, JwtStrategy ],
   exports: [ JwtService ]
 })
 export class JwtModule {}
