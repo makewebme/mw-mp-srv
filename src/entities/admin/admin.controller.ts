@@ -14,7 +14,6 @@ import RegisterDto from './dto/register.dto'
 import { Admin } from './admin.entity'
 import { RoleGuard } from 'src/guards/role.guard'
 import { E_Role } from '@entities/role/role.enum'
-// import { JwtAuthGuard } from '@services/jwt/jwt-auth.guard'
 
 
 @Controller('admins')
@@ -40,7 +39,6 @@ export class AdminController {
 
   @Get('/:adminId')
   @HttpCode(HttpStatus.OK)
-  // @UseGuards(JwtAuthGuard)
   @UseGuards(RoleGuard(E_Role.SuperAdmin))
   async getAdminData(@Param('adminId', ParsePositiveIntPipe) adminId: number) {
     try {
