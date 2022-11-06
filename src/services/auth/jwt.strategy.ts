@@ -20,10 +20,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(req: Request) {
     const jwt = BearerParser.parseBearerToken(req.headers)
-
     const sessionData = await this.redis.get(jwt)
-    if (!sessionData) throw new UnauthorizedException()
 
-    return sessionData
+    if (!sessionData) {
+      throw new UnauthorizedException()
+    } else {
+      return sessionData
+    }
   }
 }

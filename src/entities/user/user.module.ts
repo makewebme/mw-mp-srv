@@ -1,7 +1,8 @@
-import { Module } from '@nestjs/common'
+import { Module, MiddlewareConsumer } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
-import { JwtModule } from '@services/jwt/jwt.module'
+import { AuthModule } from '@services/auth/auth.module'
+import { RequestsLoggerMiddleware } from '@helpers/requestsLogger.middleware'
 import { User } from './user.entity'
 import { UserController } from './user.controller'
 import { UserService } from './user.service'
@@ -10,9 +11,13 @@ import { UserService } from './user.service'
 @Module({
   imports: [
     TypeOrmModule.forFeature([ User ]),
-    JwtModule,
+    AuthModule,
   ],
   controllers: [ UserController ],
   providers: [ UserService ],
 })
-export class UserModule {}
+export class UserModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(RequestsLoggerMiddleware).forRoutes(UserController)
+  }
+}

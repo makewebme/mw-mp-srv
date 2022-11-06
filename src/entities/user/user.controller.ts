@@ -1,10 +1,10 @@
 import {
-  Controller, Get, Post, Put, Delete, UseGuards,
+  Controller, Get, Post, Put, Delete,
   Param, ParseIntPipe, Body, HttpCode, HttpStatus,
 } from '@nestjs/common'
 import { compare } from 'bcrypt'
-import { JwtService } from '@services/jwt/jwt.service'
 
+import { AuthService } from '@services/auth/auth.service'
 import { ForbiddenException } from '@helpers/exceptions'
 import { UserService } from './user.service'
 import { UpdateUserDto } from './dto/updateUser.dto'
@@ -16,7 +16,7 @@ import { RegisterUserDto } from './dto/registerUser.dto'
 export class UserController {
   constructor(
     private readonly userService: UserService,
-    private readonly jwtService: JwtService,
+    private readonly authService: AuthService,
   ) {}
 
   @Get('/')
@@ -44,7 +44,7 @@ export class UserController {
     const isPasswordMatch = await compare(password, foundUser.password)
     if (!isPasswordMatch) throw new ForbiddenException()
 
-    const jwt = await this.jwtService.setSession({ userId: foundUser.id })
+    const jwt = await this.authService.setSession({ userId: foundUser.id })
 
     return {
       status: 'ok',

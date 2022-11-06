@@ -1,20 +1,19 @@
 import { Injectable } from '@nestjs/common'
-import { JwtService as NestJwtService } from '@nestjs/jwt'
+import { JwtService } from '@nestjs/jwt'
 
 import { RedisService } from '@services/redis/redis.service'
 
 
 @Injectable()
-export class JwtService {
+export class AuthService {
   constructor(
-    private readonly jwtService: NestJwtService,
+    private readonly jwtService: JwtService,
     private readonly redis: RedisService,
   ) {}
 
   async setSession(payload: any) {
     const jwt = this.jwtService.sign(payload)
     await this.redis.set(jwt, payload, Number(process.env.JWT_EXPIRE))
-
     return jwt
   }
 

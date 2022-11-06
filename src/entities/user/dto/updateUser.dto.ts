@@ -2,6 +2,7 @@ import { IsEmail, IsString, IsISO8601, IsNotEmpty, IsEnum, MinLength } from 'cla
 
 import { E_Gender } from '../types'
 
+
 export class UpdateUserDto {
   @IsEmail()
   email: string

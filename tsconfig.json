@@ -15,7 +15,8 @@
       "@entities/*": ["src/entities/*"],
       "@helpers/*": ["src/helpers/*"],
       "@consts/*": ["src/consts/*"],
-      "@services/*": ["src/services/*"]
+      "@services/*": ["src/services/*"],
+      "@guards/*": ["src/guards/*"]
     },
     "incremental": true,
     "skipLibCheck": true,
