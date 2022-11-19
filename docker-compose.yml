@@ -1,8 +1,8 @@
 version: '3.5'
 
 services:
-  mw_marketplace_postgres:
-    container_name: mw_marketplace_postgres
+  mw-mp-postgres:
+    container_name: mw-mp-postgres
     image: postgres:14
     environment:
       POSTGRES_USER: mw_marketplace
@@ -13,22 +13,22 @@ services:
     ports:
       - 127.0.0.1:5432:5432
     networks:
-      - mw_marketplace
+      - mwnet
     restart: unless-stopped
 
-  mw_marketplace_redis:
-    container_name: mw_marketplace_redis
+  mw-mp-redis:
+    container_name: mw-mp-redis
     image: redis:6
     volumes:
       - redis:/data
     ports:
       - 127.0.0.1:6379:6379
     networks:
-      - mw_marketplace
+      - mwnet
     restart: unless-stopped
 
-  mw_marketplace_pgadmin:
-    container_name: mw_marketplace_pgadmin
+  mw-mp-pgadmin:
+    container_name: mw-mp-pgadmin
     image: dpage/pgadmin4
     environment:
       PGADMIN_DEFAULT_EMAIL: mw_marketplace@admin.com
@@ -39,11 +39,38 @@ services:
     ports:
       - 127.0.0.1:5050:80
     networks:
-      - mw_marketplace
+      - mwnet
+    restart: unless-stopped
+
+  mw-mp-srv:
+    container_name: mw-mp-srv
+    build: .
+    ports:
+      - 127.0.0.1:6010:6010
+    networks:
+      - mwnet
+    restart: unless-stopped
+
+  mw-mp-front:
+    container_name: mw-mp-front
+    build: ../mw-mp-front
+    ports:
+      - 127.0.0.1:6015:6015
+    networks:
+      - mwnet
+    restart: unless-stopped
+
+  mw-mp-admin:
+    container_name: mw-mp-admin
+    build: ../mw-mp-admin
+    ports:
+      - 127.0.0.1:6020:6020
+    networks:
+      - mwnet
     restart: unless-stopped
 
 networks:
-  mw_marketplace:
+  mwnet:
     driver: bridge
 
 volumes:
