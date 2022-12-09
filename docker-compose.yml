@@ -1,7 +1,7 @@
 version: '3.5'
 
 services:
-  mw-mp-postgres:
+  postgres:
     container_name: mw-mp-postgres
     image: postgres:14
     environment:
@@ -16,7 +16,7 @@ services:
       - mwnet
     restart: unless-stopped
 
-  mw-mp-redis:
+  redis:
     container_name: mw-mp-redis
     image: redis:6
     volumes:
@@ -27,7 +27,7 @@ services:
       - mwnet
     restart: unless-stopped
 
-  mw-mp-pgadmin:
+  pgadmin:
     container_name: mw-mp-pgadmin
     image: dpage/pgadmin4
     environment:
@@ -42,7 +42,7 @@ services:
       - mwnet
     restart: unless-stopped
 
-  mw-mp-srv:
+  srv:
     container_name: mw-mp-srv
     build: .
     ports:
@@ -51,7 +51,7 @@ services:
       - mwnet
     restart: unless-stopped
 
-  mw-mp-front:
+  front:
     container_name: mw-mp-front
     build: ../mw-mp-front
     ports:
@@ -60,11 +60,20 @@ services:
       - mwnet
     restart: unless-stopped
 
-  mw-mp-admin:
+  admin:
     container_name: mw-mp-admin
     build: ../mw-mp-admin
     ports:
       - 127.0.0.1:6020:6020
+    networks:
+      - mwnet
+    restart: unless-stopped
+
+  nginx:
+    container_name: mw-mp-nginx
+    build: ./nginx
+    ports:
+      - 127.0.0.1:80:80
     networks:
       - mwnet
     restart: unless-stopped
