@@ -45,8 +45,8 @@ services:
   srv:
     container_name: mw-mp-srv
     build: .
-    ports:
-      - 127.0.0.1:6010:6010
+    # ports:
+    #   - 127.0.0.1:6010:6010
     networks:
       - mwnet
     restart: unless-stopped
@@ -54,8 +54,8 @@ services:
   front:
     container_name: mw-mp-front
     build: ../mw-mp-front
-    ports:
-      - 127.0.0.1:6015:6015
+    # ports:
+      # - 127.0.0.1:6015:80
     networks:
       - mwnet
     restart: unless-stopped
@@ -63,8 +63,8 @@ services:
   admin:
     container_name: mw-mp-admin
     build: ../mw-mp-admin
-    ports:
-      - 127.0.0.1:6020:6020
+    # ports:
+      # - 127.0.0.1:6020:6020
     networks:
       - mwnet
     restart: unless-stopped
