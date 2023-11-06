@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: mw-mp
       PGDATA: /data/postgres
     volumes:
-       - postgres:/var/www/mw_marketplace/docker-volumes/postgres
+      - postgres:/var/lib/postgresql/data
     networks:
       - mwnet
     restart: unless-stopped
@@ -30,8 +30,6 @@ services:
       PGADMIN_DEFAULT_EMAIL: mw.mp@admin.com
       PGADMIN_DEFAULT_PASSWORD: mw-mp
       PGADMIN_CONFIG_SERVER_MODE: 'False'
-    volumes:
-       - pgadmin:/var/www/mw_marketplace/docker-volumes/pgadmin
     ports:
       - 127.0.0.1:5050:80
     networks:
@@ -60,5 +58,4 @@ networks:
 
 volumes:
   postgres:
-  pgadmin:
   redis:

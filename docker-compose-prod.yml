@@ -5,11 +5,11 @@ services:
     container_name: mw-mp-postgres
     image: postgres:14
     environment:
-      POSTGRES_USER: mw_marketplace
-      POSTGRES_PASSWORD: mw_marketplace
+      POSTGRES_USER: mw-mp
+      POSTGRES_PASSWORD: mw-mp
       PGDATA: /data/postgres
     volumes:
-       - postgres:/var/www/mw_marketplace/docker-volumes/postgres
+      - postgres:/var/lib/postgresql/data
     networks:
       - mwnet
     restart: unless-stopped
