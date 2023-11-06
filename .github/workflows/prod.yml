@@ -39,8 +39,11 @@ jobs:
           key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
           port: 22
           script: |
+            rm -rf mw-mp-srv
             git clone https://github.com/makewebme/mw-mp-srv.git
             cd ./mw-mp-srv
             docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
             docker-compose -f docker-compose-prod.yml up -d --build
+            cd ..
+            rm -rf mw-mp-srv
 
