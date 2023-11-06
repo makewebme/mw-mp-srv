@@ -34,8 +34,6 @@ services:
   pgadmin:
     container_name: mw-mp-pgadmin
     image: dpage/pgadmin4
-    # tags:
-    #   - mw-mp-pgadmin
     environment:
       PGADMIN_DEFAULT_EMAIL: mw_marketplace@admin.com
       PGADMIN_DEFAULT_PASSWORD: mw_marketplace
@@ -50,8 +48,6 @@ services:
 
   srv:
     container_name: mw-mp-srv
-    # tags:
-    #   - mw-mp-srv
     build: .
     # ports:
     #   - 127.0.0.1:6010:6010
@@ -61,8 +57,6 @@ services:
 
   nginx:
     container_name: mw-mp-nginx
-    # tags:
-    #   - mw-mp-nginx
     build: ./nginx
     ports:
       - 127.0.0.1:80:80
