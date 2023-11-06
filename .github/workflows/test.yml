@@ -21,20 +21,23 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Push postgres image
-        run: docker image push makewebme/postgres:latest
+      - name: List images
+        run: docker image ls
 
-      - name: Push redis image
-        run: docker image push makewebme/redis:latest
+      # - name: Push postgres image
+      #   run: docker image push makewebme/postgres:latest
 
-      - name: Push pgadmin image
-        run: docker image push makewebme/pgadmin:latest
+      # - name: Push redis image
+      #   run: docker image push makewebme/redis:latest
 
-      - name: Push srv image
-        run: docker image push makewebme/srv:latest
+      # - name: Push pgadmin image
+      #   run: docker image push makewebme/pgadmin:latest
 
-      - name: Push nginx image
-        run: docker image push makewebme/nginx:latest
+      # - name: Push srv image
+      #   run: docker image push makewebme/srv:latest
+
+      # - name: Push nginx image
+      #   run: docker image push makewebme/nginx:latest
 
       # -
       #   name: Build and push
