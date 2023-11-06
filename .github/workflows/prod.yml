@@ -1,4 +1,4 @@
-name: Deploy backend
+name: Production backend
 
 on:
   push:
@@ -30,3 +30,15 @@ jobs:
 
       - name: Push nginx image
         run: docker image push makewebme/mw-mp-nginx:latest
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            touch /root/testfile.md
+            echo 'I work !!!'
+            ls -la .
