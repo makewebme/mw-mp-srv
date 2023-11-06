@@ -17,7 +17,7 @@ jobs:
         run: ls .
 
       - name: Build srv image
-        run: docker build .
+        run: docker build -t makewebme/mw-mp-srv:latest .
 
       - name: List images
         run: docker image ls
@@ -28,7 +28,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      - name: Push postgres image
+      - name: Push srv image
         run: docker image push mw-mp_srv
 
       # - name: Push redis image
