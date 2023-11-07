@@ -43,6 +43,9 @@ jobs:
             git clone https://github.com/makewebme/mw-mp-srv.git
             cd ./mw-mp-srv
             docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+            docker-compose -f docker-compose-prod.yml down
+            docker image rm makewebme/mw-mp-srv
+            docker image rm makewebme/mw-mp-nginx
             docker-compose -f docker-compose-prod.yml up -d --build
             cd ..
             rm -rf mw-mp-srv
