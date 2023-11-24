@@ -15,3 +15,18 @@ jobs:
 
       - name: Build srv image
         run: docker build -t makewebme/mw-mp-srv:latest .
+
+      - name: Build nginx image
+        run: docker build -t makewebme/mw-mp-nginx:latest ./nginx
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+
+      - name: Push srv image
+        run: docker image push makewebme/mw-mp-srv:latest
+
+      - name: Push nginx image
+        run: docker image push makewebme/mw-mp-nginx:latest
