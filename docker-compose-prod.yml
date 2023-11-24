@@ -25,14 +25,14 @@ services:
 
   srv:
     container_name: mw-mp-srv
-    image: makewebme/mw-mp-srv:latest
+    image: makewebme/mw-mp-srv
     networks:
       - mwnet
     restart: unless-stopped
 
   nginx:
     container_name: mw-mp-nginx
-    image: makewebme/mw-mp-nginx:latest
+    image: makewebme/mw-mp-nginx
     ports:
       - 80:80
     networks:
