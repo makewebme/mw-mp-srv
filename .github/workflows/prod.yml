@@ -12,3 +12,6 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v3
+
+      - name: Build srv image
+        run: docker build -t makewebme/mw-mp-srv:latest .
