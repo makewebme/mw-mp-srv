@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: mw-mp
       PGDATA: /data/postgres
     volumes:
-      - postgres:/var/lib/postgresql/data
+       - postgres:/var/lib/postgresql/data
     networks:
       - mwnet
     restart: unless-stopped
@@ -23,31 +23,18 @@ services:
       - mwnet
     restart: unless-stopped
 
-  pgadmin:
-    container_name: mw-mp-pgadmin
-    image: dpage/pgadmin4
-    environment:
-      PGADMIN_DEFAULT_EMAIL: mw.mp@admin.com
-      PGADMIN_DEFAULT_PASSWORD: mw-mp
-      PGADMIN_CONFIG_SERVER_MODE: 'False'
-    ports:
-      - 127.0.0.1:5050:80
-    networks:
-      - mwnet
-    restart: unless-stopped
-
   srv:
     container_name: mw-mp-srv
-    build: .
+    image: makewebme/mw-mp-srv:latest
     networks:
       - mwnet
     restart: unless-stopped
 
   nginx:
     container_name: mw-mp-nginx
-    build: ./nginx
+    image: makewebme/mw-mp-nginx:latest
     ports:
-      - 127.0.0.1:80:80
+      - 80:80
     networks:
       - mwnet
     restart: unless-stopped

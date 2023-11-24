@@ -14,7 +14,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build srv image
-        run: docker build -t makewebme/mw-mp-srv:latest .
+        run: docker build -t makewebme/mw-mp-srv:latest . -f Dockerfile.prod
 
       - name: Build nginx image
         run: docker build -t makewebme/mw-mp-nginx:latest ./nginx
@@ -30,3 +30,22 @@ jobs:
 
       - name: Push nginx image
         run: docker image push makewebme/mw-mp-nginx:latest
+
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_PRIVATE_KEY }}
+          port: 22
+          script: |
+            rm -rf mw-mp-srv
+            git clone https://github.com/makewebme/mw-mp-srv.git
+            cd ./mw-mp-srv
+            docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_PASSWORD }}
+            docker-compose -f docker-compose-prod.yml down
+            docker image rm makewebme/mw-mp-srv
+            docker image rm makewebme/mw-mp-nginx
+            docker-compose -f docker-compose-prod.yml up -d --build
+            cd ..
+            rm -rf mw-mp-srv
